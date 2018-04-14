@@ -32,10 +32,10 @@ public class ArkTransactionEventHandler {
     private final ArkSatoshiService arkSatoshiService;
     private final FeeSettings feeSettings;
     private final ArkClient arkbClient;
-    private final BigDecimal arkaToArkbRate;
+    private final BigDecimal arkbPerArka;
     private final ServiceArkbAccountSettings serviceArkbAccountSettings;
 
-    @PostMapping("/arkEvents")
+    @PostMapping("/arkaEvents")
     public ResponseEntity<Void> handleEvent(@RequestBody ArkTransactionEventPayload eventPayload) {
         String arkaTransactionId = eventPayload.getTransactionId();
         
@@ -64,7 +64,7 @@ public class ArkTransactionEventHandler {
             BigDecimal incomingArkaAmount = arkSatoshiService.toArk(arkTransaction.getAmount());
             transferEntity.setArkaAmount(incomingArkaAmount);
 
-            transferEntity.setArkaToArkbRate(arkaToArkbRate);
+            transferEntity.setArkbPerArka(arkbPerArka);
 
             // Deduct fees
             transferEntity.setArkaFlatFee(feeSettings.getArkaFlatFee());
@@ -77,7 +77,7 @@ public class ArkTransactionEventHandler {
 
             // Calculate send ark amount
             BigDecimal arkaSendAmount = incomingArkaAmount.subtract(arkaTotalFeeAmount);
-            BigDecimal arkbSendAmount = arkaSendAmount.multiply(arkaToArkbRate).setScale(8, RoundingMode.HALF_DOWN);
+            BigDecimal arkbSendAmount = arkaSendAmount.multiply(arkbPerArka).setScale(8, RoundingMode.HALF_DOWN);
             // todo: optionally subtract arkb transaction fee
             BigDecimal minArkbAmount = BigDecimal.ZERO; // todo: this should be expected arkb txn fee
             if (arkbSendAmount.compareTo(minArkbAmount) <= 0) {

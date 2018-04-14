@@ -52,7 +52,7 @@ curl http://localhost:9191/
           "arkaAmount" : {
             "type" : "string"
           },
-          "arkaToArkbRate" : {
+          "arkbPerArka" : {
             "type" : "string"
           },
           "arkaFlatFee" : {
@@ -127,7 +127,7 @@ curl -X GET http://localhost:9191/contracts/abe05cd7-40c2-4fb0-a4a7-8d2f76e74978
       "createdAt" : "2018-01-21T20:24:52.057Z",
       "arkaTransactionId" : "78b6c99c40451d7e46f2eb41cdb831d087fecd759b01e00fd69e34959b5bee25",
       "arkaAmount" : "109.100000",
-      "arkaToArkbRate" : "1000",
+      "arkbPerArka" : "1000",
       "arkaFlatFee" : "0.00000000",
       "arkaPercentFee" : "1.00000000",
       "arkaTotalFee" : "0.00001000",

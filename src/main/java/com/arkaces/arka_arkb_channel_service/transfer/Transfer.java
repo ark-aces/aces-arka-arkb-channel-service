@@ -9,7 +9,7 @@ public class Transfer {
     private String createdAt;
     private String arkaTransactionId;
     private String arkaAmount;
-    private String arkaToArkbRate;
+    private String arkbPerArka;
     private String arkaFlatFee;
     private String arkaPercentFee;
     private String arkaTotalFee;

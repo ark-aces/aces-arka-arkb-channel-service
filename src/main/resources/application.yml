@@ -9,7 +9,7 @@ serverInfo:
   flatFee: "0"
   percentFee: "1.00%"
   # Exchange rate is a static value because ARKB will not likely have an active market. Set this value to the amount of ARKB you will receive for each ARKA. The default provides 1 ARKB for each 1 ARKA received.
-  arkaToArkbRate: "1"
+  arkbPerArka: "1"
   capacities:
     -
       value: "100000000.00"
@@ -43,7 +43,7 @@ serverInfo:
             "arkAmount": {
               "type": "string"
             },
-            "arkaToArkbRate": {
+            "arkbPerArka": {
               "type": "string"
             },
             "arkaFlatFee": {
@@ -97,6 +97,8 @@ arkbNetworkConfigPath: "ark_network_config/testnet.yml"
 fees:
   arkaFlatFee: 0
   arkaPercentFee: 1
+
+arkbPerArka: 1
 
 server:
   port: 9191

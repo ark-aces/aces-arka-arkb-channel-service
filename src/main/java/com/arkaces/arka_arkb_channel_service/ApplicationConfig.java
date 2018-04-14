@@ -69,8 +69,8 @@ public class ApplicationConfig {
     }
 
     @Bean
-    public BigDecimal arkaToArkbRate(Environment environment) {
-        return environment.getProperty("arkaToArkbRate", BigDecimal.class);
+    public BigDecimal arkbPerArka(Environment environment) {
+        return environment.getProperty("arkbPerArka", BigDecimal.class);
     }
 
 }

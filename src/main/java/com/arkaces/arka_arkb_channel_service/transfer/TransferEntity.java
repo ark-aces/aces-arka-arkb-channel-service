@@ -25,7 +25,7 @@ public class TransferEntity {
     private BigDecimal arkaAmount;
 
     @Column(precision = 20, scale = 8)
-    private BigDecimal arkaToArkbRate;
+    private BigDecimal arkbPerArka;
 
     @Column(precision = 20, scale = 8)
     private BigDecimal arkaFlatFee;

@@ -17,7 +17,7 @@ public class TransferMapper {
         transfer.setArkaAmount(transferEntity.getArkaAmount().toPlainString());
         transfer.setArkaFlatFee(transferEntity.getArkaFlatFee().toPlainString());
         transfer.setArkaPercentFee(transferEntity.getArkaPercentFee().toPlainString());
-        transfer.setArkaToArkbRate(transferEntity.getArkaToArkbRate().toPlainString());
+        transfer.setArkbPerArka(transferEntity.getArkbPerArka().toPlainString());
         transfer.setArkaTotalFee(transferEntity.getArkaTotalFee().toPlainString());
         transfer.setCreatedAt(transferEntity.getCreatedAt().atOffset(ZoneOffset.UTC).toString());
         
