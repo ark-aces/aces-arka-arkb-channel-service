@@ -30,7 +30,7 @@ public class ContractController {
     private final ContractMapper contractMapper;
     private final AcesListenerApi arkaListener;
     private final String arkaEventCallbackUrl;
-    private final ArkClient arkClient;
+    private final ArkClient arkaClient;
 
     @PostMapping("/contracts")
     public Contract<Results> postContract(@RequestBody CreateContractRequest<Arguments> createContractRequest) {
@@ -44,7 +44,7 @@ public class ContractController {
         // generate arka wallet for deposits
         String depositArkaAddressPassphrase = identifierGenerator.generate();
 
-        String depositArkaAddress = arkClient.getAddress(depositArkaAddressPassphrase);
+        String depositArkaAddress = arkaClient.getAddress(depositArkaAddressPassphrase);
         contractEntity.setDepositArkaAddress(depositArkaAddress);
         contractEntity.setDepositArkaAddressPassphrase(depositArkaAddressPassphrase);
 

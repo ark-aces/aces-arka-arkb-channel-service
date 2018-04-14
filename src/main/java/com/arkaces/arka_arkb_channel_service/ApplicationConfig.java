@@ -59,7 +59,7 @@ public class ApplicationConfig {
     }
 
     @Bean
-    public String arkEventCallbackUrl(Environment environment) {
+    public String arkaEventCallbackUrl(Environment environment) {
         return environment.getProperty("arkaEventCallbackUrl");
     }
 
