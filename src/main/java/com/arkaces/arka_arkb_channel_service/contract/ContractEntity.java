@@ -21,7 +21,6 @@ public class ContractEntity {
     private String correlationId;
     private String status;
     private LocalDateTime createdAt;
-    private LocalDateTime expiresAt;
     private String recipientArkbAddress;
     private String depositArkaAddress;
     private String depositArkaAddressPassphrase;

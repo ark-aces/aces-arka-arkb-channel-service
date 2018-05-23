@@ -11,6 +11,7 @@ public class TransferMapper {
         Transfer transfer = new Transfer();
         transfer.setId(transferEntity.getId());
         transfer.setStatus(transferEntity.getStatus());
+        transfer.setReturnArkaAddress(transferEntity.getReturnArkaAddress());
         transfer.setArkaTransactionId(transferEntity.getArkaTransactionId());
         transfer.setArkbSendAmount(transferEntity.getArkbSendAmount().toPlainString());
         transfer.setArkbTransactionId(transferEntity.getArkbTransactionId());
@@ -20,6 +21,7 @@ public class TransferMapper {
         transfer.setArkbPerArka(transferEntity.getArkbPerArka().toPlainString());
         transfer.setArkaTotalFee(transferEntity.getArkaTotalFee().toPlainString());
         transfer.setCreatedAt(transferEntity.getCreatedAt().atOffset(ZoneOffset.UTC).toString());
+        transfer.setReturnArkaTransactionId(transferEntity.getReturnArkaTransactionId());
         
         return transfer;
     }

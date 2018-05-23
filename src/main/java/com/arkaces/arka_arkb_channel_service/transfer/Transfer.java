@@ -7,6 +7,7 @@ public class Transfer {
     private String id;
     private String status;
     private String createdAt;
+    private String returnArkaAddress;
     private String arkaTransactionId;
     private String arkaAmount;
     private String arkbPerArka;
@@ -15,4 +16,6 @@ public class Transfer {
     private String arkaTotalFee;
     private String arkbSendAmount;
     private String arkbTransactionId;
+    private String returnArkaTransactionId;
+
 }

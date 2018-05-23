@@ -31,15 +31,18 @@ public class ContractController {
     private final AcesListenerApi arkaListener;
     private final String arkaEventCallbackUrl;
     private final ArkClient arkaClient;
+    private final CreateContractRequestValidator contractRequestValidator;
 
     @PostMapping("/contracts")
     public Contract<Results> postContract(@RequestBody CreateContractRequest<Arguments> createContractRequest) {
+        contractRequestValidator.validate(createContractRequest);
+        
         ContractEntity contractEntity = new ContractEntity();
         contractEntity.setCorrelationId(createContractRequest.getCorrelationId());
         contractEntity.setRecipientArkbAddress(createContractRequest.getArguments().getRecipientArkbAddress());
         contractEntity.setCreatedAt(LocalDateTime.now());
         contractEntity.setId(identifierGenerator.generate());
-        contractEntity.setStatus(ContractStatus.EXECUTED);
+        contractEntity.setStatus(ContractStatus.NEW);
         
         // generate arka wallet for deposits
         String depositArkaAddressPassphrase = identifierGenerator.generate();

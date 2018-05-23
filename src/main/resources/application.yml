@@ -4,23 +4,23 @@ serverInfo:
   instructions: >
     After this contract is executed, any ARKA sent to depositArkaAddress will be exchanged for ARKB and
     sent directly to the given recipientArkbAddress less service fees.
-  version: "1.0.0"
+  version: "1.1.0"
   websiteUrl: "https://arkaces.com"
-  flatFee: "0"
-  percentFee: "1.00%"
   # Exchange rate is a static value because ARKB will not likely have an active market. Set this value to the amount of ARKB you will receive for each ARKA. The default provides 1 ARKB for each 1 ARKA received.
   arkbPerArka: "1"
-  capacities:
-    -
-      value: "100000000.00"
-      unit: "ARKB"
-      displayValue: "100000000 ARKB"
+#  capacities:
+#    -
+#      value: "100000000.00"
+#      unit: "ARKB"
+#      displayValue: "100000000 ARKB"
   inputSchema: >
     {
       "type": "object",
       "properties": {
         "recipientArkaAddress": {
-          "type": "string"
+          "type": "string",
+          "title": "Recipient ARKB Address",
+          "Enter recipient ARKB address to transfer funds to."
         }
       },
       "required": [
@@ -69,30 +69,13 @@ serverInfo:
       }
     }
 
-#spring:
-#  datasource:
-#    url: "jdbc:h2:/tmp/arka_arkb_channel_service.db;DB_CLOSE_ON_EXIT=FALSE;AUTO_RECONNECT=TRUE"
-#    driver-class-name: "org.h2.Driver"
-#  jpa:
-#    hibernate:
-#      ddl-auto: "update"
-
-
-#spring:
-#  datasource:
-#    platform: postgres
-#    url: jdbc:postgresql://localhost:5432/aces_ark_arkx_channel_db
-#    username: service_user
-#    password: password
-#  jpa:
-#    hibernate:
-#      ddl-auto: update
-#
-#flyway:
-#  enabled: true
-
 arkaNetworkConfigPath: "ark_network_config/testnet.yml"
 arkbNetworkConfigPath: "ark_network_config/testnet.yml"
+
+arkaUnit: "DARK"
+arkbUnit: "DARK"
+
+security.ignored: "/**"
 
 fees:
   arkaFlatFee: 0
@@ -105,11 +88,13 @@ server:
 
 spring:
   datasource:
-    url: "jdbc:h2:/tmp/arka_arkb_channel_service.db;DB_CLOSE_ON_EXIT=FALSE;AUTO_RECONNECT=TRUE"
-    driver-class-name: "org.h2.Driver"
+    platform: "postgres"
+    url: "jdbc:postgresql://localhost:5432/arka_arkb_channel_service_db"
+    username: "postgres"
+    password: "password"
   jpa:
     hibernate:
-      ddl-auto: "update"
+      ddl-auto: "validate"
 
 arkaListener:
   url: http://localhost:9091

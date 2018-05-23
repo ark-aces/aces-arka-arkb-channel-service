@@ -19,6 +19,7 @@ public class TransferEntity {
     private String id;
     private LocalDateTime createdAt;
     private String status;
+    private String returnArkaAddress;
     private String arkaTransactionId;
 
     @Column(precision = 20, scale = 8)
@@ -50,5 +51,7 @@ public class TransferEntity {
     private String returnArkaTransactionId;
 
     @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "contract_pid")
     private ContractEntity contractEntity;
 }
+

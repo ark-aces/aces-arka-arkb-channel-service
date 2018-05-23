@@ -44,7 +44,7 @@
 		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
-			<!--<scope>runtime</scope>-->
+			<scope>runtime</scope>
 		</dependency>
 		<dependency>
 			<groupId>postgresql</groupId>
@@ -78,11 +78,6 @@
 			<version>1.1.5.RELEASE</version>
 		</dependency>
 		<dependency>
-			<groupId>com.arkaces</groupId>
-			<artifactId>ark-java-client</artifactId>
-			<version>0.7.0</version>
-		</dependency>
-		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-lang3</artifactId>
 			<version>3.0</version>
@@ -90,12 +85,21 @@
 		<dependency>
 			<groupId>com.arkaces</groupId>
 			<artifactId>aces_server_lib</artifactId>
-			<version>5.6.0</version>
+			<version>5.7.0</version>
 		</dependency>
 		<dependency>
 			<groupId>com.arkaces</groupId>
 			<artifactId>aces_listener_api</artifactId>
 			<version>1.0.0</version>
+		</dependency>
+		<dependency>
+			<groupId>com.arkaces</groupId>
+			<artifactId>ark-java-client</artifactId>
+			<version>0.7.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.flywaydb</groupId>
+			<artifactId>flyway-core</artifactId>
 		</dependency>
 	</dependencies>
 

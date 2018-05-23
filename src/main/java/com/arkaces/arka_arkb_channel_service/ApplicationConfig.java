@@ -4,24 +4,22 @@ import ark_java_client.*;
 import com.arkaces.ApiClient;
 import com.arkaces.aces_listener_api.AcesListenerApi;
 import com.arkaces.aces_server.aces_service.config.AcesServiceConfig;
-import com.arkaces.aces_server.ark_auth.ArkAuthConfig;
-import org.h2.tools.Server;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
-import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
+import org.springframework.context.event.ApplicationEventMulticaster;
+import org.springframework.context.event.SimpleApplicationEventMulticaster;
 import org.springframework.core.env.Environment;
+import org.springframework.core.task.SimpleAsyncTaskExecutor;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.scheduling.annotation.EnableScheduling;
-import org.springframework.web.client.RestTemplate;
 
 import java.math.BigDecimal;
-import java.sql.SQLException;
 
 @Configuration
 @EnableScheduling
-@Import({AcesServiceConfig.class, ArkAuthConfig.class})
+@Import({AcesServiceConfig.class})
 @EnableJpaRepositories
 @EntityScan
 public class ApplicationConfig {
@@ -63,14 +61,27 @@ public class ApplicationConfig {
         return environment.getProperty("arkaEventCallbackUrl");
     }
 
-    @Bean(initMethod="start", destroyMethod="stop")
-    public Server h2WebConsonleServer () throws SQLException {
-        return Server.createWebServer("-web","-webAllowOthers","-webDaemon","-webPort", "8082");
-    }
-
     @Bean
     public BigDecimal arkbPerArka(Environment environment) {
         return environment.getProperty("arkbPerArka", BigDecimal.class);
     }
 
+    @Bean(name = "applicationEventMulticaster")
+    public ApplicationEventMulticaster simpleApplicationEventMulticaster() {
+        SimpleApplicationEventMulticaster eventMulticaster = new SimpleApplicationEventMulticaster();
+        eventMulticaster.setTaskExecutor(new SimpleAsyncTaskExecutor());
+
+        return eventMulticaster;
+    }
+    
+    @Bean
+    public String arkaUnit(Environment environment) {
+        return environment.getProperty("arkaUnit");
+    }
+    
+    @Bean
+    public String arkbUnit(Environment environment) {
+        return environment.getProperty("arkbUnit");
+    }
+    
 }

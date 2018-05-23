@@ -6,4 +6,6 @@ public interface ContractRepository extends PagingAndSortingRepository<ContractE
     ContractEntity findOneById(String id);
 
     ContractEntity findOneBySubscriptionId(String subscriptionId);
+
+    ContractEntity findOneByCorrelationId(String correlationId);
 }
