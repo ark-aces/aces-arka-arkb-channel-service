@@ -8,16 +8,23 @@ serverInfo:
   websiteUrl: "https://arkaces.com"
   # Exchange rate is a static value because ARKB will not likely have an active market. Set this value to the amount of ARKB you will receive for each ARKA. The default provides 1 ARKB for each 1 ARKA received.
   arkbPerArka: "1"
+  # Flat fee label (actual fee charged is is fees.arkaFlatFee property
+  flatFee: "1 ARK"
+  # Percent fee label (actual percent fee charged is in fees.arkaPercentFee property
+  percentFee: "1.00%"
+
+  # Uncomment below to override shown capacity, by default the capacity will be set to the amount in the service address
 #  capacities:
 #    -
 #      value: "100000000.00"
 #      unit: "ARKB"
 #      displayValue: "100000000 ARKB"
+
   inputSchema: >
     {
       "type": "object",
       "properties": {
-        "recipientArkaAddress": {
+        "recipientArkbAddress": {
           "type": "string",
           "title": "Recipient ARKB Address",
           "Enter recipient ARKB address to transfer funds to."
@@ -78,7 +85,7 @@ arkbUnit: "DARK"
 security.ignored: "/**"
 
 fees:
-  arkaFlatFee: 0
+  arkaFlatFee: 1
   arkaPercentFee: 1
 
 arkbPerArka: 1
