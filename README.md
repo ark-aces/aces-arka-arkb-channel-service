@@ -4,8 +4,6 @@ ACES ARKA-ARKB transfer channel service
 
 ## Set up Local Database
 
-
-
 ```
 docker run -d -p 5432:5432 \
 --name aces_arka_arkb_channel_service_db \

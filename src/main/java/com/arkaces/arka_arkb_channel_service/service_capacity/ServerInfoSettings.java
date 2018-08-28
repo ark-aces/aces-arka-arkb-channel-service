@@ -5,7 +5,6 @@ import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 @Data
@@ -17,8 +16,8 @@ public class ServerInfoSettings {
     private String version;
     private String websiteUrl;
     private String instructions;
-    private BigDecimal flatFee;
-    private BigDecimal percentFee;
+    private String flatFee;
+    private String percentFee;
     private List<Capacity> capacities;
     private String inputSchema;
     private String outputSchema;

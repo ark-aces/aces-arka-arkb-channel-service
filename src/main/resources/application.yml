@@ -76,8 +76,8 @@ serverInfo:
       }
     }
 
-arkaNetworkConfigPath: "ark_network_config/testnet.yml"
-arkbNetworkConfigPath: "ark_network_config/testnet.yml"
+arkaNetworkConfigPath: "ark_network_config/devnet.yml"
+arkbNetworkConfigPath: "ark_network_config/devnet.yml"
 
 arkaUnit: "DARK"
 arkbUnit: "DARK"

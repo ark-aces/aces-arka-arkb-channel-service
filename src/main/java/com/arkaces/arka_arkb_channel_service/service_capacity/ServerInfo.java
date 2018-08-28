@@ -15,8 +15,8 @@ public class ServerInfo {
     private String websiteUrl;
     private String instructions;
     private List<Capacity> capacities;
-    private BigDecimal flatFee;
-    private BigDecimal percentFee;
+    private String flatFee;
+    private String percentFee;
     private JsonNode inputSchema;
     private JsonNode outputSchema;
     private List<String> interfaces;

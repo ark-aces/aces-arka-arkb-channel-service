@@ -31,7 +31,7 @@ public class ServiceCapacityService {
         ServiceCapacityEntity serviceCapacityEntity = serviceCapacityRepository.findOneForUpdate(1L);
 
         // Get ark balance, this tries up to 5 times in case nodes are not responding
-        SimpleRetryPolicy policy = new SimpleRetryPolicy(5, Collections.singletonMap(Exception.class, true));
+        SimpleRetryPolicy policy = new SimpleRetryPolicy(10, Collections.singletonMap(Exception.class, true));
         RetryTemplate template = new RetryTemplate();
         template.setRetryPolicy(policy);
         BigDecimal accountBalance;
