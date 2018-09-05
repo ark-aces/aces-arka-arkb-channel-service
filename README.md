@@ -2,7 +2,9 @@
 
 ACES ARKA-ARKB transfer channel service
 
-## Set up Local Database
+## Local Setup
+
+### Set up Local Database
 
 ```
 docker run -d -p 5432:5432 \
@@ -13,11 +15,36 @@ docker run -d -p 5432:5432 \
 postgres:9.6.1
 ```
 
-## Run
+### Run Ark listener
+
+This app depends on a local instance of [Aces Listener Ark](https://github.com/ark-aces/aces-listener-ark) running
+to get transactions from. Follow the instructions in the readme to get one running locally for this app to connect
+to.
+
+### Configuration
+
+Copy [/main/resources/application.yml](main/resources/application.yml) into an external file on your system
+(for example: `/etc/arka-arkb-service/application.yml`) and replace configuration properties to match your
+local setup. For example, you would need to change the `serviceArkbAccount` address and passphrase to an actual
+ARK account.
+
+
+### Run Channel Service
 
 ```
-mvn clean spring-boot:run
+mvn clean spring-boot:run --spring.config.location=file:/etc/arka-arkb-service/application.yml
 ```
+
+### Run Channel Service (production)
+
+
+To run the application in a live environment, you can build a jar package using `mvn package` and then
+run the jar app generated under `/target` build directory with you custom configuration:
+
+```
+java -jar {jar-name}.jar --spring.config.location=file:/etc/arka-arkb-service/application.yml
+```
+
 
 ## Using Service
 
@@ -111,7 +138,6 @@ curl -X POST http://localhost:9191/contracts \
   "correlationId": "4aafe9-4a40-a7fb-6e788d2497f7",
   "status": "executed",
   "results": {
-  
     "recipientArkbAddress": "DDiTHZ4RETZhGxcyAi1VruCXZKxBFqXMeh",
     "depositArkaAddress": "ARNJJruY6RcuYCXcwWsu4bx9kyZtntqeAx",
     "transfers": []

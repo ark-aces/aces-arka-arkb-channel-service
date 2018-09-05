@@ -4,6 +4,7 @@ import ark_java_client.*;
 import com.arkaces.ApiClient;
 import com.arkaces.aces_listener_api.AcesListenerApi;
 import com.arkaces.aces_server.aces_service.config.AcesServiceConfig;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -22,6 +23,7 @@ import java.math.BigDecimal;
 @Import({AcesServiceConfig.class})
 @EnableJpaRepositories
 @EntityScan
+@Slf4j
 public class ApplicationConfig {
 
     @Bean
@@ -30,6 +32,7 @@ public class ApplicationConfig {
         String arkaNetworkConfigPath = environment.getProperty("arkaNetworkConfigPath");
         ArkNetwork arkaNetwork = arkaNetworkFactory.createFromYml(arkaNetworkConfigPath);
 
+        log.info("Bootstrapping Arka client with network peers");
         HttpArkClientFactory httpArkaClientFactory = new HttpArkClientFactory();
         return httpArkaClientFactory.create(arkaNetwork);
     }
@@ -40,6 +43,7 @@ public class ApplicationConfig {
         String arkbNetworkConfigPath = environment.getProperty("arkbNetworkConfigPath");
         ArkNetwork arkbNetwork = arkbNetworkFactory.createFromYml(arkbNetworkConfigPath);
 
+        log.info("Bootstrapping Arkb client with network peers");
         HttpArkClientFactory httpArkbClientFactory = new HttpArkClientFactory();
         return httpArkbClientFactory.create(arkbNetwork);
     }

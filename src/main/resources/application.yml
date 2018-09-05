@@ -27,7 +27,7 @@ serverInfo:
         "recipientArkbAddress": {
           "type": "string",
           "title": "Recipient ARKB Address",
-          "Enter recipient ARKB address to transfer funds to."
+          "description": "Enter recipient ARKB address to transfer funds to."
         }
       },
       "required": [
@@ -81,8 +81,6 @@ arkbNetworkConfigPath: "ark_network_config/devnet.yml"
 
 arkaUnit: "DARK"
 arkbUnit: "DARK"
-
-security.ignored: "/**"
 
 fees:
   arkaFlatFee: 1
