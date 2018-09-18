@@ -63,8 +63,7 @@ public class TransferService {
         TransferEntity transferEntity = transferRepository.findOneForUpdate(transferPid);
         ContractEntity contractEntity = transferEntity.getContractEntity();
 
-        BigDecimal totalAmount = transferEntity.getArkbSendAmount().add(Constants.ARK_TRANSACTION_FEE);
-        if (totalAmount.compareTo(BigDecimal.ZERO) > 0) {
+        if (transferEntity.getArkbSendAmount().compareTo(BigDecimal.ZERO) > 0) {
             BigDecimal arkSendAmount = transferEntity.getArkbSendAmount();
             String recipientArkbAddress = contractEntity.getRecipientArkbAddress();
             String arkTransactionId = arkService.sendTransaction(recipientArkbAddress, arkSendAmount);
@@ -91,10 +90,14 @@ public class TransferService {
 
         String returnArkaAddress = transferEntity.getReturnArkaAddress();
         if (returnArkaAddress != null) {
-            String returnArkaTransactionId = arkService.sendTransaction(returnArkaAddress, transferEntity.getArkaAmount()
-                .subtract(Constants.ARK_TRANSACTION_FEE));
+            BigDecimal returnAmount = transferEntity.getArkaAmount().subtract(Constants.ARK_TRANSACTION_FEE);
+            String returnArkaTransactionId = arkService.sendTransaction(returnArkaAddress, returnAmount,
+                    transferEntity.getContractEntity().getDepositArkaAddressPassphrase());
             transferEntity.setStatus(TransferStatus.RETURNED);
             transferEntity.setReturnArkaTransactionId(returnArkaTransactionId);
+
+            log.info("Sent " + transferEntity.getArkaAmount() + " ark to " + returnArkaAddress
+                    + ", arka transaction id " + returnArkaTransactionId + " for arka deposit " + transferEntity.getArkaTransactionId());
         } else {
             log.warn("Ark return could not be processed for transfer " + transferPid);
             transferEntity.setStatus(TransferStatus.FAILED);
@@ -107,7 +110,6 @@ public class TransferService {
         TransferEntity transferEntity = transferRepository.findOneForUpdate(transferPid);
         transferEntity.setStatus(TransferStatus.FAILED);
         transferRepository.save(transferEntity);
-
     }
     
 }

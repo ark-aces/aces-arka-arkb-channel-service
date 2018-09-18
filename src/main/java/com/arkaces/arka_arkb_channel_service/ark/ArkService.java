@@ -23,13 +23,17 @@ public class ArkService {
     }
 
     public String sendTransaction(String recipientArkAddress, BigDecimal amount) {
+        return sendTransaction(recipientArkAddress, amount, serviceArkAccountSettings.getPassphrase());
+    }
+
+    public String sendTransaction(String recipientArkAddress, BigDecimal amount, String passphrase) {
         Long arktoshiAmount = arkSatoshiService.toSatoshi(amount);
         return arkbClient.broadcastTransaction(
-            recipientArkAddress,
-            arktoshiAmount,
-            null,
-            serviceArkAccountSettings.getPassphrase(),
-            10
+                recipientArkAddress,
+                arktoshiAmount,
+                null,
+                passphrase,
+                10
         );
     }
 }
