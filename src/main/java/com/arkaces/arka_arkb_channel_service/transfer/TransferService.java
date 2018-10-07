@@ -2,6 +2,7 @@ package com.arkaces.arka_arkb_channel_service.transfer;
 
 import com.arkaces.arka_arkb_channel_service.Constants;
 import com.arkaces.arka_arkb_channel_service.ark.ArkService;
+import com.arkaces.arka_arkb_channel_service.ark.ArkaService;
 import com.arkaces.arka_arkb_channel_service.contract.ContractEntity;
 import com.arkaces.arka_arkb_channel_service.service_capacity.ServiceCapacityEntity;
 import com.arkaces.arka_arkb_channel_service.service_capacity.ServiceCapacityRepository;
@@ -22,6 +23,7 @@ public class TransferService {
 
     private final TransferRepository transferRepository;
     private final ArkService arkService;
+    private final ArkaService arkaService;
     private final ServiceCapacityService serviceCapacityService;
     private final ServiceCapacityRepository serviceCapacityRepository;
 
@@ -91,7 +93,7 @@ public class TransferService {
         String returnArkaAddress = transferEntity.getReturnArkaAddress();
         if (returnArkaAddress != null) {
             BigDecimal returnAmount = transferEntity.getArkaAmount().subtract(Constants.ARK_TRANSACTION_FEE);
-            String returnArkaTransactionId = arkService.sendTransaction(returnArkaAddress, returnAmount,
+            String returnArkaTransactionId = arkaService.sendTransaction(returnArkaAddress, returnAmount,
                     transferEntity.getContractEntity().getDepositArkaAddressPassphrase());
             transferEntity.setStatus(TransferStatus.RETURNED);
             transferEntity.setReturnArkaTransactionId(returnArkaTransactionId);
