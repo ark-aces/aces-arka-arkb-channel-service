@@ -10,9 +10,9 @@ import java.math.BigDecimal;
 
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class ArkService {
+public class ArkaService {
 
-    private final ArkClient arkbClient;
+    private final ArkClient arkaClient;
     private final ServiceArkbAccountSettings serviceArkAccountSettings;
     private final ArkSatoshiService arkSatoshiService;
 
@@ -22,7 +22,7 @@ public class ArkService {
 
     public BigDecimal getArkBalance(String address) {
         return arkSatoshiService.toArk(Long.parseLong(
-                arkbClient.getBalance(address)
+                arkaClient.getBalance(address)
                         .getBalance()));
     }
 
@@ -32,7 +32,7 @@ public class ArkService {
 
     public String sendTransaction(String recipientArkAddress, BigDecimal amount, String passphrase) {
         Long arktoshiAmount = arkSatoshiService.toSatoshi(amount);
-        return arkbClient.broadcastTransaction(
+        return arkaClient.broadcastTransaction(
                 recipientArkAddress,
                 arktoshiAmount,
                 null,

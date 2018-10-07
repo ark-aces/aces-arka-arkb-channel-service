@@ -109,3 +109,9 @@ arkaEventCallbackUrl: http://localhost:9191/arkaEvents
 serviceArkbAccount:
   address: change_me
   passphrase: change_me
+
+# Arka sweep settings for collecting deposits into a single service account
+arkaSweep:
+  enabled: false
+  arkaAddress: change_me
+  runIntervalSec: 86400
