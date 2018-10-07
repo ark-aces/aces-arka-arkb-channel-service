@@ -28,6 +28,11 @@ Copy [/main/resources/application.yml](main/resources/application.yml) into an e
 local setup. For example, you would need to change the `serviceArkbAccount` address and passphrase to an actual
 ARK account.
 
+Each channel generates and uses a unique deposit address so the balances should be collected periodically
+into another account. This app includes a sweep job that is configured under the `arkaSweep` section of the config.
+If enabled, the sweep will run on the configured interval (default is once per day) to collect the 
+deposit balances into the target address.
+
 
 ### Run Channel Service
 
