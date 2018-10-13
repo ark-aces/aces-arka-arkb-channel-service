@@ -39,7 +39,7 @@ serverInfo:
       "type": "object",
       "properties": {
         "depositArkaAddress": {
-          "type": "string"
+          "type": "string",
           "title": "Deposit ARKA Address",
           "description": "Send ARKA to this address to execute contract."
         },
@@ -58,7 +58,7 @@ serverInfo:
             },
             "arkbPerArka": {
               "type": "string",
-              "title": "ARKB/ARKA"
+              "title": "ARKB/ARKA",
               "description": "Amount of ARKB to receive per ARKA"
             },
             "arkaFlatFee": {
