@@ -14,11 +14,11 @@ serverInfo:
   percentFee: "1.00%"
 
   # Uncomment below to override shown capacity, by default the capacity will be set to the amount in the service address
-#  capacities:
-#    -
-#      value: "100000000.00"
-#      unit: "ARKB"
-#      displayValue: "100000000 ARKB"
+  #  capacities:
+  #    -
+  #      value: "100000000.00"
+  #      unit: "ARKB"
+  #      displayValue: "100000000 ARKB"
 
   inputSchema: >
     {
@@ -40,36 +40,56 @@ serverInfo:
       "properties": {
         "depositArkaAddress": {
           "type": "string"
+          "title": "Deposit ARKA Address",
+          "description": "Send ARKA to this address to execute contract."
         },
         "recipientArkbAddress": {
-          "type": "string"
+          "type": "string",
+          "title": "Recipient ARKB Address",
+          "description": "ARKB will arrive at this address on contract execution."
         },
         "transfers": {
           "type": "array",
           "properties": {
             "arkAmount": {
-              "type": "string"
+              "type": "string",
+              "title": "ARKA Transfer Amount",
+              "description": "The amount of ARK to transfer"
             },
             "arkbPerArka": {
-              "type": "string"
+              "type": "string",
+              "title": "ARKB/ARKA"
+              "description": "Amount of ARKB to receive per ARKA"
             },
             "arkaFlatFee": {
-              "type": "string"
+              "type": "string",
+              "title": "ARKA Flat Fee",
+              "description": "Fixed fee per execution, charged in ARKA"
             },
             "arkaPercentFee": {
-              "type": "string"
+              "type": "string",
+              "title": "ARKA Percentage Fee",
+              "description": "Percentage fee per execution, charged in ARKA"
             },
             "arkaTotalFee": {
-              "type": "string"
+              "type": "string",
+              "title": "Total Fees",
+              "description": "The sum of flat fees and percentage fees, charged in ARKA"
             },
             "arkbSendAmount": {
-              "type": "string"
+              "type": "string",
+              "title": "ARKB Receiving Amount",
+              "Description": "Total ARKB to be received, net of fees"
             },
             "arkbTransactionId": {
-              "type": "string"
+              "type": "string",
+              "title": "ARKB Transaction ID",
+              "description": "The transaction ID for the ARKB contract fulfillment"
             },
             "createdAt": {
-              "type": "string"
+              "type": "string",
+              "title": "Create Date",
+              "description": "The time the contract was created."
             }
           }
         }
