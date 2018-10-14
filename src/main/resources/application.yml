@@ -50,40 +50,62 @@ serverInfo:
         },
         "transfers": {
           "type": "array",
+          "title": "Transfers",
+          "description": "List of transfers",
           "properties": {
-            "arkAmount": {
+            "id": {
               "type": "string",
-              "title": "ARKA Transfer Amount",
+              "title": "Transfer ID",
+              "description": "Identifier for transfer"
+            },
+            "status": {
+              "type": "string",
+              "title": "Status",
+              "description": "The status of the transfer"
+            },
+            "returnArkaAddress": {
+              "type": "string",
+              "title": "Return Address (ARKA)",
+              "description": "The ARKA address for returns of failed executions."
+            },
+            "arkaTransactionId": {
+              "type": "string",
+              "title": "Transaction ID (ARKA)",
+              "description": "The transaction ID for the ARKA contract fulfillment"
+            },
+            "arkaAmount": {
+              "type": "string",
+              "title": "Transfer Amount (ARKA)",
               "description": "The amount of ARK to transfer"
             },
             "arkbPerArka": {
               "type": "string",
-              "title": "ARKB/ARKA",
+              "title": "ARKB/ARKA Exchange Rate",
               "description": "Amount of ARKB to receive per ARKA"
             },
             "arkaFlatFee": {
               "type": "string",
-              "title": "ARKA Flat Fee",
+              "title": "Flat Fee (ARKA)",
               "description": "Fixed fee per execution, charged in ARKA"
             },
             "arkaPercentFee": {
               "type": "string",
-              "title": "ARKA Percentage Fee",
+              "title": "Percentage Fee (ARKA)",
               "description": "Percentage fee per execution, charged in ARKA"
             },
             "arkaTotalFee": {
               "type": "string",
-              "title": "Total Fees",
+              "title": "Total Fees (ARKA)",
               "description": "The sum of flat fees and percentage fees, charged in ARKA"
             },
             "arkbSendAmount": {
               "type": "string",
-              "title": "ARKB Receiving Amount",
+              "title": "Receiving Amount (ARKB)",
               "Description": "Total ARKB to be received, net of fees"
             },
             "arkbTransactionId": {
               "type": "string",
-              "title": "ARKB Transaction ID",
+              "title": "Transaction ID (ARKB)",
               "description": "The transaction ID for the ARKB contract fulfillment"
             },
             "createdAt": {
