@@ -1,5 +1,6 @@
 package com.arkaces.arka_arkb_channel_service.transfer;
 
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -11,7 +12,7 @@ import javax.persistence.LockModeType;
 
 
 @Transactional
-public interface TransferRepository extends PagingAndSortingRepository<TransferEntity, Long> {
+public interface TransferRepository extends JpaRepository<TransferEntity, Long> {
 
     TransferEntity findOneByArkaTransactionId(String arkaTransactionId);
 

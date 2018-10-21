@@ -1,5 +1,7 @@
 package com.arkaces.arka_arkb_channel_service.transfer;
 
+import com.arkaces.aces_server.aces_service.notification.NotificationService;
+import com.arkaces.aces_server.common.error.NotFoundException;
 import com.arkaces.arka_arkb_channel_service.Constants;
 import com.arkaces.arka_arkb_channel_service.ark.ArkService;
 import com.arkaces.arka_arkb_channel_service.ark.ArkaService;
@@ -26,6 +28,8 @@ public class TransferService {
     private final ArkaService arkaService;
     private final ServiceCapacityService serviceCapacityService;
     private final ServiceCapacityRepository serviceCapacityRepository;
+    private final NotificationService notificationService;
+    private final BigDecimal lowCapacityThreshold;
 
     /**
      * @return true if amount reserved successfully
@@ -45,7 +49,11 @@ public class TransferService {
         serviceCapacityEntity.setAvailableAmount(newAvailableAmount);
         serviceCapacityEntity.setUnsettledAmount(newUnsettledAmount);
         serviceCapacityRepository.save(serviceCapacityEntity);
-        
+
+        if (serviceCapacityEntity.getAvailableAmount().compareTo(lowCapacityThreshold) <= 0) {
+            notificationService.notifyLowCapacity(serviceCapacityEntity.getAvailableAmount(), serviceCapacityEntity.getUnit());
+        }
+
         return true;
     }
     
@@ -79,6 +87,11 @@ public class TransferService {
         transferRepository.save(transferEntity);
 
         log.info("Saved transfer id " + transferEntity.getId() + " to contract " + contractEntity.getId());
+
+        notificationService.notifySuccessfulTransfer(
+                transferEntity.getContractEntity().getId(),
+                transferEntity.getId()
+        );
     }
 
     /**
@@ -108,10 +121,16 @@ public class TransferService {
         transferRepository.save(transferEntity);
     }
     
-    public void processFailedTransfer(Long transferPid) {
+    public void processFailedTransfer(Long transferPid, String message) {
         TransferEntity transferEntity = transferRepository.findOneForUpdate(transferPid);
         transferEntity.setStatus(TransferStatus.FAILED);
         transferRepository.save(transferEntity);
+
+        notificationService.notifyFailedTransfer(
+                transferEntity.getContractEntity().getId(),
+                transferEntity.getId(),
+                message
+        );
     }
     
 }

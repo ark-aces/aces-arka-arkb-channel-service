@@ -25,7 +25,7 @@ public class TransferEventProcessor {
             }
         } catch (Exception e) {
             log.error("Exception handling new transfer event", e);
-            transferService.processFailedTransfer(transferPid);
+            transferService.processFailedTransfer(transferPid, e.getMessage());
         }
     }
 }

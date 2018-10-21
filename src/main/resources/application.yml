@@ -1,3 +1,27 @@
+
+server:
+  port: 9191
+
+spring:
+  datasource:
+    platform: "postgres"
+    url: "jdbc:postgresql://localhost:5432/arka_arkb_channel_service_db"
+    username: "postgres"
+    password: "password"
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: "validate"
+
+  mail:
+    host: "change-me"
+    port: 587
+    username: "change-me"
+    password: "change-me"
+    properties:
+      mail.smtp.auth: true
+      mail.startttls.enable: true
+
 serverInfo:
   name: "Aces ARKA-ARKB Channel Service"
   description: "ACES ARKA to ARKB Channel service for value transfers"
@@ -130,19 +154,6 @@ fees:
 
 arkbPerArka: 1
 
-server:
-  port: 9191
-
-spring:
-  datasource:
-    platform: "postgres"
-    url: "jdbc:postgresql://localhost:5432/arka_arkb_channel_service_db"
-    username: "postgres"
-    password: "password"
-  jpa:
-    hibernate:
-      ddl-auto: "validate"
-
 arkaListener:
   url: http://localhost:9091
 
@@ -157,3 +168,13 @@ arkaSweep:
   enabled: false
   arkaAddress: change_me
   runIntervalSec: 86400
+
+
+# Send notifications on low capacity and transfer completed/failed
+notifications:
+  enabled: false
+  recipientEmailAddress: "change_me"
+  fromEmailAddress: "change_me"
+
+# Capacity threshold at which low capacity notifications will be sent
+lowCapacityThreshold: "100.00"
