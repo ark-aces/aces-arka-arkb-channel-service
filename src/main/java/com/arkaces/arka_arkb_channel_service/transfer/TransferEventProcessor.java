@@ -19,13 +19,18 @@ public class TransferEventProcessor {
         try {
             if (transferService.reserveTransferCapacity(transferPid)) {
                 transferService.processNewTransfer(transferPid);
-                transferService.settleTransferCapacity(transferPid);
             } else {
                 transferService.processReturn(transferPid);
             }
+            transferService.settleTransferCapacity(transferPid);
         } catch (Exception e) {
             log.error("Exception handling new transfer event", e);
-            transferService.processFailedTransfer(transferPid, e.getMessage());
+            try {
+                transferService.processFailedTransfer(transferPid, e.getMessage());
+                transferService.settleTransferCapacity(transferPid);
+            } catch (Exception e2) {
+                log.error("Exception settling failed transfer event", e);
+            }
         }
     }
 }
