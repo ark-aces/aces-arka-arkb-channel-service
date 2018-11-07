@@ -1,6 +1,7 @@
 package com.arkaces.arka_arkb_channel_service.service_capacity;
 
 import com.arkaces.aces_server.aces_service.server_info.Capacity;
+import com.arkaces.arka_arkb_channel_service.FeeSettings;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +20,8 @@ public class ServerInfoController {
     private final ObjectMapper objectMapper;
     private final ServiceCapacityService serviceCapacityService;
     private final String arkbUnit;
+    private final String arkaUnit;
+    private final FeeSettings feeSettings;
     
     @GetMapping("/")
     public ServerInfo getServerInfo() {
@@ -43,12 +46,16 @@ public class ServerInfoController {
         serverInfo.setVersion(serverInfoSettings.getVersion());
         serverInfo.setWebsiteUrl(serverInfoSettings.getWebsiteUrl());
         serverInfo.setCapacities(serverInfoSettings.getCapacities());
-        serverInfo.setFlatFee(serverInfoSettings.getFlatFee());
-        serverInfo.setPercentFee(serverInfoSettings.getPercentFee());
+        serverInfo.setFlatFee(feeSettings.getArkaFlatFee());
+        serverInfo.setFlatFeeUnit(arkaUnit);
+        serverInfo.setPercentFee(feeSettings.getArkaPercentFee());
         serverInfo.setInputSchema(inputSchemaJsonNode);
         serverInfo.setOutputSchema(outputSchemaJsonNode);
         serverInfo.setInterfaces(serverInfoSettings.getInterfaces());
-        
+
+        serverInfo.setOutputSchemaUrlTemplates(serverInfoSettings.getOutputSchemaUrlTemplates());
+        serverInfo.setExchangeRateHref("/exchangeRate");
+
         if (serverInfoSettings.getCapacities() != null) {
             // Show capacity from config file
             serverInfo.setCapacities(serverInfoSettings.getCapacities());

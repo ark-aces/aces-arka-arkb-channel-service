@@ -30,12 +30,6 @@ serverInfo:
     sent directly to the given recipientArkbAddress less service fees.
   version: "1.1.0"
   websiteUrl: "https://arkaces.com"
-  # Exchange rate is a static value because ARKB will not likely have an active market. Set this value to the amount of ARKB you will receive for each ARKA. The default provides 1 ARKB for each 1 ARKA received.
-  arkbPerArka: "1"
-  # Flat fee label (actual fee charged is is fees.arkaFlatFee property
-  flatFee: "1 ARK"
-  # Percent fee label (actual percent fee charged is in fees.arkaPercentFee property
-  percentFee: "1.00%"
 
   # Uncomment below to override shown capacity, by default the capacity will be set to the amount in the service address
   #  capacities:
@@ -141,6 +135,23 @@ serverInfo:
         }
       }
     }
+  outputSchemaUrlTemplates:
+    -
+      property: "depositArkaAddress"
+      urlTemplate: "https://explorer.ark.io/address/{value}"
+    -
+      property: "recipientArkbAddress"
+      urlTemplate: "https://explorer.ark.io/address/{value}"
+    -
+      property: "returnArkaAddress"
+      urlTemplate: "https://explorer.ark.io/address/{value}"
+    -
+      property: "transfers.arkaTransactionId"
+      urlTemplate: "https://explorer.ark.io/transaction/{value}"
+    -
+      property: "transfers.arkbTransactionId"
+      urlTemplate: "https://explorer.ark.io/transaction/{value}"
+
 
 arkaNetworkConfigPath: "ark_network_config/devnet.yml"
 arkbNetworkConfigPath: "ark_network_config/devnet.yml"
@@ -152,6 +163,8 @@ fees:
   arkaFlatFee: 1
   arkaPercentFee: 1
 
+# Exchange rate is a static value because ARKB will not likely have an active market.
+# Set this value to the amount of ARKB you will receive for each ARKA. The default provides 1 ARKB for each 1 ARKA received.
 arkbPerArka: 1
 
 arkaListener:

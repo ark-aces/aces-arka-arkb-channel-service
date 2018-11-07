@@ -15,9 +15,12 @@ public class ServerInfo {
     private String websiteUrl;
     private String instructions;
     private List<Capacity> capacities;
-    private String flatFee;
-    private String percentFee;
+    private BigDecimal flatFee;
+    private String flatFeeUnit;
+    private BigDecimal percentFee;
     private JsonNode inputSchema;
     private JsonNode outputSchema;
+    private List<PropertyUrlTemplate> outputSchemaUrlTemplates;
+    private String exchangeRateHref;
     private List<String> interfaces;
 }

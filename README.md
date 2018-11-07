@@ -23,7 +23,7 @@ to.
 
 ### Configuration
 
-Copy [/main/resources/application.yml](main/resources/application.yml) into an external file on your system
+Copy [src/main/resources/application.yml](src/main/resources/application.yml) into an external file on your system
 (for example: `/etc/arka-arkb-service/application.yml`) and replace configuration properties to match your
 local setup. For example, you would need to change the `serviceArkbAccount` address and passphrase to an actual
 ARK account.

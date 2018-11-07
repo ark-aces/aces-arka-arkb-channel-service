@@ -16,10 +16,9 @@ public class ServerInfoSettings {
     private String version;
     private String websiteUrl;
     private String instructions;
-    private String flatFee;
-    private String percentFee;
     private List<Capacity> capacities;
     private String inputSchema;
     private String outputSchema;
+    private List<PropertyUrlTemplate> outputSchemaUrlTemplates;
     private List<String> interfaces;
 }
