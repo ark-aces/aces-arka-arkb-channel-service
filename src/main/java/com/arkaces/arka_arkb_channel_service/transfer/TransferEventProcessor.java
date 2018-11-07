@@ -16,21 +16,16 @@ public class TransferEventProcessor {
     @EventListener
     public void handleNewTransferEvent(NewTransferEvent newTransferEvent) {
         Long transferPid = newTransferEvent.getTransferPid();
-        try {
-            if (transferService.reserveTransferCapacity(transferPid)) {
+        if (transferService.reserveTransferCapacity(transferPid)) {
+            try {
                 transferService.processNewTransfer(transferPid);
-            } else {
-                transferService.processReturn(transferPid);
+            } catch (Exception e) {
+                log.error("Exception settling failed transfer event", e);
+                transferService.processFailedTransfer(transferPid, e.getMessage());
             }
             transferService.settleTransferCapacity(transferPid);
-        } catch (Exception e) {
-            log.error("Exception handling new transfer event", e);
-            try {
-                transferService.processFailedTransfer(transferPid, e.getMessage());
-                transferService.settleTransferCapacity(transferPid);
-            } catch (Exception e2) {
-                log.error("Exception settling failed transfer event", e);
-            }
+        } else {
+            transferService.processReturn(transferPid);
         }
     }
 }
