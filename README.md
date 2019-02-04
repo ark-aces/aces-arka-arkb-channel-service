@@ -7,7 +7,7 @@ ACES ARKA-ARKB transfer channel service
 ### Set up Local Database
 
 ```
-docker run -d -p 5432:5432 \
+docker run -d -p 5433:5432 \
 --name aces_arka_arkb_channel_service_db \
 -e POSTGRES_PASSWORD=password \
 -e POSTGRES_USER=postgres \
