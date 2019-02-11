@@ -152,7 +152,7 @@ serverInfo:
       property: "transfers.arkbTransactionId"
       urlTemplate: "https://explorer.ark.io/transaction/{value}"
 
-
+# Ark client configurations for https://github.com/ark-aces/ark-java-client
 arkaNetworkConfigPath: "ark_network_config/devnet.yml"
 arkbNetworkConfigPath: "ark_network_config/devnet.yml"
 
