@@ -179,14 +179,10 @@ exchangeRate:
   # Set this value to the amount of ARKB you will receive for each ARKA. The default provides 1 ARKB for each 1 ARKA received.
   fixedRate: 1.0
 
+# Arka listener settings
 arkScanDepth: 500
 arkScanIntervalSec: 10
 arkMinConfirmations: 1
-
-arkaListener:
-  url: http://localhost:9091
-
-arkaEventCallbackUrl: http://localhost:9191/arkaEvents
 
 serviceArkbAccount:
   address: change_me

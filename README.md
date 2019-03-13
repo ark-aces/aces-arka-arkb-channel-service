@@ -15,11 +15,6 @@ docker run -d -p 5433:5432 \
 postgres:9.6.1
 ```
 
-### Run Ark listener
-
-This app depends on a local instance of [Aces Listener Ark](https://github.com/ark-aces/aces-listener-ark) running
-to get transactions from. Follow the instructions in the readme to get one running locally for this app to connect
-to.
 
 ### Configuration
 

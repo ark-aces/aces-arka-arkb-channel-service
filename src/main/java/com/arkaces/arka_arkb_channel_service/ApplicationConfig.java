@@ -50,11 +50,6 @@ public class ApplicationConfig {
         return httpArkbClientFactory.create(arkbNetwork);
     }
 
-    @Bean
-    public String arkaEventCallbackUrl(Environment environment) {
-        return environment.getProperty("arkaEventCallbackUrl");
-    }
-
     @Bean(name = "applicationEventMulticaster")
     public ApplicationEventMulticaster simpleApplicationEventMulticaster() {
         SimpleApplicationEventMulticaster eventMulticaster = new SimpleApplicationEventMulticaster();
