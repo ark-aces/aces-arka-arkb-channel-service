@@ -1,16 +1,21 @@
 package com.arkaces.arka_arkb_channel_service.transfer;
 
+import ark_java_client.Transaction;
 import com.arkaces.aces_server.common.identifer.IdentifierGenerator;
 import com.arkaces.arka_arkb_channel_service.Constants;
 import com.arkaces.arka_arkb_channel_service.FeeSettings;
 import com.arkaces.arka_arkb_channel_service.ark.ArkSatoshiService;
+import com.arkaces.arka_arkb_channel_service.ark_listener.NewArkTransactionEvent;
 import com.arkaces.arka_arkb_channel_service.contract.ContractEntity;
 import com.arkaces.arka_arkb_channel_service.contract.ContractRepository;
+import com.arkaces.arka_arkb_channel_service.exchange_rate.ExchangeRateService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.context.event.EventListener;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -29,20 +34,20 @@ public class ArkTransactionEventHandler {
     private final IdentifierGenerator identifierGenerator;
     private final ArkSatoshiService arkSatoshiService;
     private final FeeSettings feeSettings;
-    private final BigDecimal arkbPerArka;
+    private final ExchangeRateService exchangeRateService;
     private final ApplicationEventPublisher applicationEventPublisher;
 
-    @PostMapping("/arkaEvents")
-    public ResponseEntity<Void> handleEvent(@RequestBody ArkTransactionEventPayload eventPayload) {
+    @EventListener
+    @Transactional
+    public void handleArkTransactionEvent(NewArkTransactionEvent eventPayload) {
         String arkaTransactionId = eventPayload.getTransactionId();
-        
-        log.info("Received Arka event: " + arkaTransactionId + " -> " + eventPayload.getData());
-        
-        String subscriptionId = eventPayload.getSubscriptionId();
-        ContractEntity contractEntity = contractRepository.findOneBySubscriptionId(subscriptionId);
+
+        log.info("Received Arka event: " + arkaTransactionId + " -> " + eventPayload.getTransaction());
+
+        ContractEntity contractEntity = contractRepository.findOne(eventPayload.getContractPid());
         if (contractEntity == null) {
             log.info("Arka event has no corresponding contract: " + eventPayload);
-            return ResponseEntity.ok().build();
+            return;
         }
 
         log.info("Matched event for contract id " + contractEntity.getId() + " arka transaction id " + arkaTransactionId);
@@ -50,9 +55,9 @@ public class ArkTransactionEventHandler {
         TransferEntity existingTransferEntity = transferRepository.findOneByArkaTransactionId(arkaTransactionId);
         if (existingTransferEntity != null) {
             log.info("Transfer for ark transaction " + arkaTransactionId + " already exists with id " + existingTransferEntity.getId());
-            return ResponseEntity.ok().build();
+            return;
         }
-        
+
         String transferId = identifierGenerator.generate();
 
         TransferEntity transferEntity = new TransferEntity();
@@ -60,17 +65,18 @@ public class ArkTransactionEventHandler {
         transferEntity.setStatus(TransferStatus.NEW);
         transferEntity.setCreatedAt(LocalDateTime.now());
         transferEntity.setArkaTransactionId(arkaTransactionId);
-        transferEntity.setReturnArkaAddress(eventPayload.getData().getSenderId());
+        transferEntity.setReturnArkaAddress(eventPayload.getTransaction().getSenderId());
         transferEntity.setContractEntity(contractEntity);
 
         // Get Arka amount from transaction
-        ArkTransaction arkTransaction = eventPayload.getData();
+        Transaction arkTransaction = eventPayload.getTransaction();
 
         BigDecimal incomingArkaAmount = arkSatoshiService.toArk(arkTransaction.getAmount());
         transferEntity.setArkaAmount(incomingArkaAmount);
 
-        transferEntity.setArkbPerArka(arkbPerArka);
-        
+        BigDecimal arkaToArkbRate = exchangeRateService.getRate();
+        transferEntity.setArkbPerArka(arkaToArkbRate);
+
         transferEntity.setArkaFlatFee(feeSettings.getArkaFlatFee());
         transferEntity.setArkaPercentFee(feeSettings.getArkaPercentFee());
 
@@ -81,7 +87,7 @@ public class ArkTransactionEventHandler {
 
         // Calculate send ark amount
         BigDecimal arkaSendAmount = incomingArkaAmount.subtract(arkaTotalFeeAmount);
-        BigDecimal arkbSendAmount = arkaSendAmount.multiply(arkbPerArka).setScale(8, RoundingMode.HALF_DOWN);
+        BigDecimal arkbSendAmount = arkaSendAmount.multiply(arkaToArkbRate).setScale(8, RoundingMode.HALF_DOWN);
         if (arkbSendAmount.compareTo(Constants.ARK_TRANSACTION_FEE) <= 0) {
             arkbSendAmount = BigDecimal.ZERO;
         }
@@ -94,9 +100,6 @@ public class ArkTransactionEventHandler {
         NewTransferEvent newTransferEvent = new NewTransferEvent();
         newTransferEvent.setTransferPid(transferEntity.getPid());
         applicationEventPublisher.publishEvent(newTransferEvent);
-
-        
-        return ResponseEntity.ok().build();
     }
 
 }

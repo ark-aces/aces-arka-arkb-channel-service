@@ -1,16 +1,12 @@
 package com.arkaces.arka_arkb_channel_service.contract;
 
 import ark_java_client.ArkClient;
-import com.arkaces.ApiException;
-import com.arkaces.aces_listener_api.AcesListenerApi;
 import com.arkaces.aces_server.aces_service.contract.Contract;
 import com.arkaces.aces_server.aces_service.contract.ContractStatus;
 import com.arkaces.aces_server.aces_service.contract.CreateContractRequest;
 import com.arkaces.aces_server.aces_service.error.ServiceErrorCodes;
 import com.arkaces.aces_server.common.error.NotFoundException;
 import com.arkaces.aces_server.common.identifer.IdentifierGenerator;
-import io.swagger.client.model.Subscription;
-import io.swagger.client.model.SubscriptionRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,8 +24,6 @@ public class ContractController {
     private final IdentifierGenerator identifierGenerator;
     private final ContractRepository contractRepository;
     private final ContractMapper contractMapper;
-    private final AcesListenerApi arkaListener;
-    private final String arkaEventCallbackUrl;
     private final ArkClient arkaClient;
     private final CreateContractRequestValidator contractRequestValidator;
 
@@ -50,20 +44,6 @@ public class ContractController {
         String depositArkaAddress = arkaClient.getAddress(depositArkaAddressPassphrase);
         contractEntity.setDepositArkaAddress(depositArkaAddress);
         contractEntity.setDepositArkaAddressPassphrase(depositArkaAddressPassphrase);
-
-        // subscribe to arka listener on deposit arka address
-        SubscriptionRequest subscriptionRequest = new SubscriptionRequest();
-        subscriptionRequest.setCallbackUrl(arkaEventCallbackUrl);
-        subscriptionRequest.setMinConfirmations(1);
-        subscriptionRequest.setRecipientAddress(depositArkaAddress);
-        Subscription subscription;
-        try {
-            subscription = arkaListener.subscriptionsPost(subscriptionRequest);
-            log.info("subscription: " + subscription.toString());
-        } catch (ApiException e) {
-            throw new RuntimeException("Arka Listener subscription failed to POST", e);
-        }
-        contractEntity.setSubscriptionId(subscription.getId());
 
         contractRepository.save(contractEntity);
 

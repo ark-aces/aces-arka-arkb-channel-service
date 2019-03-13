@@ -5,7 +5,7 @@
 
 	<groupId>com.arkaces</groupId>
 	<artifactId>arka_arkb_channel_service</artifactId>
-	<version>1.8.0</version>
+	<version>1.9.0</version>
 	<packaging>jar</packaging>
 
 	<name>arka_arkb_channel_service</name>
@@ -75,11 +75,6 @@
 			<groupId>com.arkaces</groupId>
 			<artifactId>aces_server_lib</artifactId>
 			<version>5.11.0</version>
-		</dependency>
-		<dependency>
-			<groupId>com.arkaces</groupId>
-			<artifactId>aces_listener_api</artifactId>
-			<version>1.1.0</version>
 		</dependency>
 		<dependency>
 			<groupId>com.arkaces</groupId>

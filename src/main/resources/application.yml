@@ -163,9 +163,25 @@ fees:
   arkaFlatFee: 1
   arkaPercentFee: 1
 
-# Exchange rate is a static value because ARKB will not likely have an active market.
-# Set this value to the amount of ARKB you will receive for each ARKA. The default provides 1 ARKB for each 1 ARKA received.
-arkbPerArka: 1
+# Exchange rate settings either use CryptoCompare API or `fixedRate`. To use CryptoCompare API for dynamic rates,
+# uncomment `fromSymbol`, `toSymbol`, and `multiplier`, and comment out `fixedRate` below
+exchangeRate:
+  # CryptoCompare Currency symbol to exchange from
+  #fromSymbol: "ARKA"
+
+  # CryptoCompare Currency symbol to exchange to
+  #toSymbol: "ARKB"
+
+  # A rate multiplier (for testing purposes if using non-mainnet coins)
+  #multiplier: 1
+
+  # Bypass CryptoCompare API by providing a hard-coded fixedRate below
+  # Set this value to the amount of ARKB you will receive for each ARKA. The default provides 1 ARKB for each 1 ARKA received.
+  fixedRate: 1.0
+
+arkScanDepth: 500
+arkScanIntervalSec: 10
+arkMinConfirmations: 1
 
 arkaListener:
   url: http://localhost:9091

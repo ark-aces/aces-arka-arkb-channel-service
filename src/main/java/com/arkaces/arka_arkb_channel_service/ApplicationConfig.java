@@ -1,8 +1,6 @@
 package com.arkaces.arka_arkb_channel_service;
 
 import ark_java_client.*;
-import com.arkaces.ApiClient;
-import com.arkaces.aces_listener_api.AcesListenerApi;
 import com.arkaces.aces_server.aces_service.config.AcesServiceConfig;
 import com.arkaces.aces_server.aces_service.notification.NotificationService;
 import com.arkaces.aces_server.aces_service.notification.NotificationServiceFactory;
@@ -53,25 +51,8 @@ public class ApplicationConfig {
     }
 
     @Bean
-    public AcesListenerApi arkaListener(Environment environment) {
-        ApiClient apiClient = new ApiClient();
-        apiClient.setBasePath(environment.getProperty("arkaListener.url"));
-        if (environment.containsProperty("arkaListener.apikey")) {
-            apiClient.setUsername("token");
-            apiClient.setPassword(environment.getProperty("arkaListener.apikey"));
-        }
-
-        return new AcesListenerApi(apiClient);
-    }
-
-    @Bean
     public String arkaEventCallbackUrl(Environment environment) {
         return environment.getProperty("arkaEventCallbackUrl");
-    }
-
-    @Bean
-    public BigDecimal arkbPerArka(Environment environment) {
-        return environment.getProperty("arkbPerArka", BigDecimal.class);
     }
 
     @Bean(name = "applicationEventMulticaster")
@@ -90,6 +71,16 @@ public class ApplicationConfig {
     @Bean
     public String arkbUnit(Environment environment) {
         return environment.getProperty("arkbUnit");
+    }
+
+    @Bean
+    public Integer arkScanDepth(Environment environment) {
+        return environment.getProperty("arkScanDepth", Integer.class);
+    }
+
+    @Bean
+    public Integer arkMinConfirmations(Environment environment) {
+        return environment.getProperty("arkMinConfirmations", Integer.class);
     }
 
     @Bean
