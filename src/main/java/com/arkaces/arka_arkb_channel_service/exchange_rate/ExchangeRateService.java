@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Map;
 
 import lombok.RequiredArgsConstructor;
@@ -32,7 +33,7 @@ public class ExchangeRateService {
             rate = getRateFromCryptoCompareApi();
         }
 
-        return rate.multiply(exchangeRateSettings.getMultiplier());
+        return rate.multiply(exchangeRateSettings.getMultiplier().setScale(8, RoundingMode.HALF_UP));
     }
 
     private BigDecimal getRateFromCryptoCompareApi() {
