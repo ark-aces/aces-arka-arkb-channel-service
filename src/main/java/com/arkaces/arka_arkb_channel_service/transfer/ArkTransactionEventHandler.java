@@ -71,8 +71,8 @@ public class ArkTransactionEventHandler {
         BigDecimal incomingArkaAmount = arkSatoshiService.toArk(arkTransaction.getAmount());
         transferEntity.setArkaAmount(incomingArkaAmount);
 
-        BigDecimal arkaToArkbRate = exchangeRateService.getRate();
-        transferEntity.setArkbPerArka(arkaToArkbRate);
+        BigDecimal arkbToArkaRate = exchangeRateService.getRate();
+        transferEntity.setArkbPerArka(arkbToArkaRate);
 
         transferEntity.setArkaFlatFee(feeSettings.getArkaFlatFee());
         transferEntity.setArkaPercentFee(feeSettings.getArkaPercentFee());
@@ -84,7 +84,7 @@ public class ArkTransactionEventHandler {
 
         // Calculate send ark amount
         BigDecimal arkaSendAmount = incomingArkaAmount.subtract(arkaTotalFeeAmount);
-        BigDecimal arkbSendAmount = arkaSendAmount.multiply(arkaToArkbRate).setScale(8, RoundingMode.HALF_DOWN);
+        BigDecimal arkbSendAmount = arkaSendAmount.multiply(arkbToArkaRate).setScale(8, RoundingMode.HALF_DOWN);
         if (arkbSendAmount.compareTo(Constants.ARK_TRANSACTION_FEE) <= 0) {
             arkbSendAmount = BigDecimal.ZERO;
         }

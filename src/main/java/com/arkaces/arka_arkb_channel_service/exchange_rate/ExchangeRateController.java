@@ -13,14 +13,16 @@ public class ExchangeRateController {
 
     private final String arkaUnit;
     private final String arkbUnit;
-    private final BigDecimal arkbPerArka;
+    private final ExchangeRateService exchangeRateService;
 
     @GetMapping("/exchangeRate")
     public ExchangeRate getExchangeRate() {
+        BigDecimal arkaToArkbRate = exchangeRateService.getRate();
+
         ExchangeRate exchangeRate = new ExchangeRate();
         exchangeRate.setFrom(arkaUnit);
         exchangeRate.setTo(arkbUnit);
-        exchangeRate.setRate(arkbPerArka);
+        exchangeRate.setRate(arkaToArkbRate);
 
         return exchangeRate;
     }
