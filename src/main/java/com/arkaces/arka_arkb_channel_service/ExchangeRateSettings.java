@@ -12,6 +12,6 @@ import java.math.BigDecimal;
 public class ExchangeRateSettings {
     private String fromSymbol;
     private String toSymbol;
-    private BigDecimal multiplier;
+    private BigDecimal multiplier = new BigDecimal(1);
     private BigDecimal fixedRate;
 }
